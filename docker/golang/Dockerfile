@@ -10,10 +10,3 @@ FROM scratch
 WORKDIR /app
 COPY --from=builder /app/main .
 CMD [ "./main" ]
-
-
-# FROM scratch
-
-# COPY go-docker /
-
-# CMD [ "/go-docker" ]
