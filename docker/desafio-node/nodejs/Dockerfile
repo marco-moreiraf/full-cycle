@@ -1,10 +1,12 @@
-FROM node:latest
+FROM node:21-bullseye-slim
+
+ENV DOCKERIZE_VERSION v0.7.0
 
 WORKDIR /usr/src/app
 
-# COPY . .
+COPY . .
 
-ENV DOCKERIZE_VERSION v0.7.0
+RUN npm install
 
 RUN apt-get update \
     && apt-get install -y wget \

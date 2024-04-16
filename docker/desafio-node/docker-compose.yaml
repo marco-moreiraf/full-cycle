@@ -22,8 +22,6 @@ services:
     image: marcomoreira94/node-app
     container_name: node-app
     tty: true
-    volumes:
-      - ./nodejs:/usr/src/app
     networks:
       - nodenet
     entrypoint: dockerize -wait tcp://db:3306 -timeout 20s docker-entrypoint.sh
