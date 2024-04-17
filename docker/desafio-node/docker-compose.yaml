@@ -26,15 +26,14 @@ services:
       - ./nodejs:/usr/src/app
     networks:
       - nodenet
-    entrypoint: dockerize -wait tcp://db:3306 -timeout 20s docker-entrypoint.sh
-    command: sh -c "npm install && node index.js"
+    entrypoint: sh -c "npm install && node index.js"
     depends_on:
-      - db
+      db:
+        condition: service_healthy
     
   db:
     image: mysql
     container_name: db
-    command: --innodb-use-native-aio=0
     restart: always
     tty: true
     volumes:
@@ -44,6 +43,11 @@ services:
       - MYSQL_ROOT_PASSWORD=root
     networks:
       - nodenet
+    healthcheck:
+      test: ["CMD", "mysqladmin", "ping", "-h", "localhost", "-u", "root", "-p$$MYSQL_ROOT_PASSWORD"]
+      interval: 5s
+      timeout: 10s
+      retries: 3
     
 networks:
   nodenet:
