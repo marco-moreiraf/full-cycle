@@ -5,3 +5,5 @@ mysql
 .vscode
 .env
 *.tar.gz
+node_modules
+*/node_modules
