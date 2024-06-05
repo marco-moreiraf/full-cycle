@@ -1,9 +1,12 @@
-export default class Product {
+import { AggregateRoot } from "../event/@shared/aggregate-root";
+
+export default class Product extends AggregateRoot {
     private _id: string;
     private _name: string;
     private _price: number;
 
     constructor(id: string, name: string, price: number) {
+        super();
         this._id = id;
         this._name = name;
         this._price = price;

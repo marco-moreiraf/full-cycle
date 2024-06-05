@@ -1,6 +1,10 @@
+import { AggregateRoot } from '../event/@shared/aggregate-root';
+import SendConsoleLogWhenCustomerAddressUpdatedHandler from '../event/customer/handler/send-console-log-when-customer-address-updated.handler';
+import SendConsoleLog1WhenCustomerCreatedHandler from '../event/customer/handler/send-console-log1-when-customer-created.handler';
+import SendConsoleLog2WhenCustomerCreatedHandler from '../event/customer/handler/send-console-log2-when-customer-created.handler';
 import Address from './address';
 
-export default class Customer {
+export default class Customer extends AggregateRoot {
     
     private _id: string;
     private _name: string = "";
@@ -9,10 +13,14 @@ export default class Customer {
     private _rewardPoints: number = 0;
 
     constructor(id: string, name: string) {
+        super();
         this._id = id;
-        this._name = name;        
+        this._name = name;
 
         this.validate();
+
+        this.register("CustomerCreatedEvent", new SendConsoleLog1WhenCustomerCreatedHandler());
+        this.register("CustomerCreatedEvent", new SendConsoleLog2WhenCustomerCreatedHandler());
     }
 
     get id(): string {
@@ -44,6 +52,11 @@ export default class Customer {
         this._name = name;
 
         this.validate();
+    }
+
+    changeAddress(address: Address) {
+        this._address = address;
+        this.register("CustomerAddressUpdatedEvent", new SendConsoleLogWhenCustomerAddressUpdatedHandler());
     }
 
     isActive(): boolean {
