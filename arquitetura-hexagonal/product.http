@@ -1,0 +1,10 @@
+POST http://localhost:9000/product
+Content-Type: application/json
+
+{
+    "name": "Test http",
+    "price": 25.99
+}
+
+###
+GET http://localhost:9000/product/4ccf199c-cc78-4f0f-a014-c4319367391e/enable
