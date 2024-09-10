@@ -1,26 +1,30 @@
+import RepositoryInteface from "../../../domain/@shared/repository/repository-interface";
+import Customer from "../../../domain/customer/entity/customer";
 import CustomerFactory from "../../../domain/customer/factory/customer.factory";
 import Address from "../../../domain/customer/value-object/address";
 import { InputUpdateCustomerDto } from "./update.customer.dto";
 import UpdateCustomerUsecase from "./update.customer.usecase";
 
-const customer = CustomerFactory.createWithAddress(
-  "John",
-  new Address("Street", 123, "Zip", "City")
-);
-
-const MockRepository = () => {
-  return {
-    create: jest.fn(),
-    findAll: jest.fn(),
-    find: jest.fn().mockReturnValue(Promise.resolve(customer)),
-    update: jest.fn(),
-  };
-};
-
 describe("Unit test for customer update use case", () => {
   let input: InputUpdateCustomerDto;
+  let customer: Customer;
+  let MockRepository: any;
 
   beforeEach(() => {
+    customer = CustomerFactory.createWithAddress(
+      "John",
+      new Address("Street", 123, "Zip", "City")
+    );
+
+    MockRepository = () => {
+      return {
+        create: jest.fn(),
+        findAll: jest.fn(),
+        find: jest.fn().mockReturnValue(Promise.resolve(customer)),
+        update: jest.fn(),
+      };
+    };
+
     input = {
       id: customer.id,
       name: "John Updated",
@@ -32,6 +36,8 @@ describe("Unit test for customer update use case", () => {
       },
     };
   });
+
+  afterEach(() => {});
 
   it("should update customer", async () => {
     const customerRepository = MockRepository();
@@ -60,9 +66,9 @@ describe("Unit test for customer update use case", () => {
 
     input.name = "";
 
-    expect(async () => {
+    await expect(async () => {
       await createCustomerUsecase.execute(input);
-    }).rejects.toThrow("Name is required");
+    }).rejects.toThrow("customer: Name is required");
   });
 
   it("should thrown an error when street is missing", async () => {
@@ -71,7 +77,7 @@ describe("Unit test for customer update use case", () => {
 
     input.address.street = "";
 
-    expect(async () => {
+    await expect(async () => {
       await createCustomerUsecase.execute(input);
     }).rejects.toThrow("Street is required");
   });

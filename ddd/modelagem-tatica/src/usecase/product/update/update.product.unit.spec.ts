@@ -2,21 +2,23 @@ import Product from "../../../domain/product/entity/product";
 import { InputUpdateProductDto } from "./update.product.dto";
 import UpdateProductUsecase from "./update.product.usecase";
 
-const product = new Product("123", "Product 1", 10);
-
-const MockRepository = () => {
-  return {
-    create: jest.fn(),
-    findAll: jest.fn(),
-    find: jest.fn().mockReturnValue(Promise.resolve(product)),
-    update: jest.fn(),
-  };
-};
-
 describe("Unit test for product usecase", () => {
   let input: InputUpdateProductDto;
+  let product: Product;
+  let MockRepository: any;
 
   beforeEach(() => {
+    product = new Product("123", "Product 1", 10);
+
+    MockRepository = () => {
+      return {
+        create: jest.fn(),
+        findAll: jest.fn(),
+        find: jest.fn().mockReturnValue(Promise.resolve(product)),
+        update: jest.fn(),
+      };
+    };
+
     input = {
       id: product.id,
       name: "New product name",
@@ -53,7 +55,7 @@ describe("Unit test for product usecase", () => {
 
     expect(async () => {
       await updateProductUsecase.execute(input);
-    }).rejects.toThrow("Name is required");
+    }).rejects.toThrow("product: Name is required");
   });
 
   it("should thrown an error when price is invalid", async () => {
@@ -64,12 +66,12 @@ describe("Unit test for product usecase", () => {
 
     expect(async () => {
       await updateProductUsecase.execute(input);
-    }).rejects.toThrow("Price must be greater than 0");
+    }).rejects.toThrow("product: Price must be greater than 0");
 
     input.price = -10;
 
     expect(async () => {
       await updateProductUsecase.execute(input);
-    }).rejects.toThrow("Price must be greater than 0");
+    }).rejects.toThrow("product: Price must be greater than 0");
   });
 });

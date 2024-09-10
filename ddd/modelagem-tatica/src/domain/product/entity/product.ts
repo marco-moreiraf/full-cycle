@@ -1,50 +1,59 @@
-import { AggregateRoot } from "../../@shared/event/aggregate-root";
+import Entity from "../../@shared/entity/entity.abstract";
+import NotificationError from "../../@shared/notification/notification.error";
 import ProductInterface from "./product.interface";
 
-export default class Product extends AggregateRoot implements ProductInterface {
-    private _id: string;
-    private _name: string;
-    private _price: number;
+export default class Product extends Entity implements ProductInterface {
+  private _name: string;
+  private _price: number;
 
-    constructor(id: string, name: string, price: number) {
-        super();
-        this._id = id;
-        this._name = name;
-        this._price = price;
-        this.validate();
+  constructor(id: string, name: string, price: number) {
+    super();
+    this._id = id;
+    this._name = name;
+    this._price = price;
+    this.validate();
+  }
+
+  get name(): string {
+    return this._name;
+  }
+
+  get price(): number {
+    return this._price;
+  }
+
+  validate() {
+    if (this._id.length === 0) {
+      this.notification.addError({
+        context: "product",
+        message: "ID is required",
+      });
+    }
+    if (this._name.length === 0) {
+      this.notification.addError({
+        context: "product",
+        message: "Name is required",
+      });
+    }
+    if (this._price <= 0) {
+      this.notification.addError({
+        context: "product",
+        message: "Price must be greater than 0",
+      });
     }
 
-    get id(): string {
-        return this._id;
+    if (this.notification.hasErrors()) {
+      throw new NotificationError(this.notification.getErrors());
     }
+  }
 
-    get name(): string {
-        return this._name;
-    }
+  changeName(name: string) {
+    this._name = name;
+    this.validate();
+  }
 
-    get price(): number {
-        return this._price;
-    }
-
-    validate() {
-        if (this._id.length === 0) {
-            throw new Error("ID is required");
-        }
-        if (this._name.length === 0) {
-            throw new Error("Name is required");
-        }
-        if (this._price <= 0) {
-            throw new Error("Price must be greater than 0");
-        }
-    }
-
-    changeName(name: string) {
-        this._name = name;
-        this.validate();
-    }
-
-    changePrice(price: number) {
-        this._price = price;
-        this.validate();
-    }
+  changePrice(price: number) {
+    this._price = price;
+    this.validate();
+  }
 }
