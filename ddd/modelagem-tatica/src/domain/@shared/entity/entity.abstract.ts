@@ -3,7 +3,7 @@ import Notification from "../notification/notification";
 
 export default abstract class Entity extends AggregateRoot {
   protected _id: string;
-  protected notification: Notification;
+  public notification: Notification;
 
   constructor() {
     super();
