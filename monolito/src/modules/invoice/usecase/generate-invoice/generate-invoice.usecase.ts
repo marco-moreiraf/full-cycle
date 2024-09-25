@@ -1,8 +1,8 @@
 import Id from "../../../@shared/domain/value-object/id.value-object";
 import UseCaseInterface from "../../../@shared/usecase/use-case.interface";
-import Address from "../../domain/value-object/address.value-object";
-import InvoiceItem from "../../domain/entity/invoice-item.entity";
-import Invoice from "../../domain/entity/invoice.entity";
+import Address from "../../../@shared/domain/value-object/address.value-object";
+import InvoiceItem from "../../domain/invoice-item.entity";
+import Invoice from "../../domain/invoice.entity";
 import InvoiceGateway from "../../gateway/invoice.gateway";
 import {
   GenerateInvoiceInputDto,

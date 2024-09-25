@@ -19,6 +19,7 @@ export default class AddClientUseCase implements UseCaseInterface {
       id: new Id(input.id),
       name: input.name,
       email: input.email,
+      document: input.document,
       address: input.address,
     });
 
@@ -28,6 +29,7 @@ export default class AddClientUseCase implements UseCaseInterface {
       id: client.id.id,
       name: client.name,
       email: client.email,
+      document: client.document,
       address: client.address,
       createdAt: client.createdAt,
       updatedAt: client.updatedAt,

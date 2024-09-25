@@ -2,9 +2,9 @@ import InvoiceModel from "../repository/invoice.model";
 import InvoiceItemModel from "../repository/invoice-item.model";
 import { Sequelize } from "sequelize-typescript";
 import InvoiceFacadeFactory from "../factory/facade.factory";
-import Address from "../domain/value-object/address.value-object";
-import InvoiceItem from "../domain/entity/invoice-item.entity";
-import Invoice from "../domain/entity/invoice.entity";
+import Address from "../../@shared/domain/value-object/address.value-object";
+import InvoiceItem from "../domain/invoice-item.entity";
+import Invoice from "../domain/invoice.entity";
 
 describe("Invoice facade unit tests", () => {
   let sequelize: Sequelize;

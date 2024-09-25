@@ -1,3 +1,5 @@
+import ValueObject from "./value-object.interface";
+
 export interface AddressProps {
   street: string;
   number: string;
@@ -7,7 +9,7 @@ export interface AddressProps {
   zipCode: string;
 }
 
-export default class Address {
+export default class Address implements ValueObject{
   private _street: string;
   private _number: string;
   private _complement: string;

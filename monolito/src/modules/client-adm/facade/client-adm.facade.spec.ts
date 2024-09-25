@@ -3,6 +3,7 @@ import { ClientModel } from "../repository/client.model";
 import ClientAdmFacadeFactory from "../factory/facade.factory";
 import Client from "../domain/client.entity";
 import Id from "../../@shared/domain/value-object/id.value-object";
+import Address from "../../@shared/domain/value-object/address.value-object";
 
 describe("ClientAdm facade unit tests", () => {
   let sequelize: Sequelize;
@@ -30,14 +31,30 @@ describe("ClientAdm facade unit tests", () => {
       id: new Id(),
       name: "Client",
       email: "client@email.com",
-      address: "Address",
+      document: "1234",
+      address: new Address({
+        street: "Street",
+        number: "123",
+        complement: "",
+        city: "City",
+        state: "State",
+        zipCode: "123456",
+      }),
     });
 
     await clientAdmFacade.addClient({
       id: client.id.id,
       name: client.name,
       email: client.email,
-      address: client.address,
+      document: "1234",
+      address: new Address({
+        street: "Street",
+        number: "123",
+        complement: "",
+        city: "City",
+        state: "State",
+        zipCode: "123456",
+      }),
     });
 
     const clientFound = await ClientModel.findOne({
@@ -47,7 +64,13 @@ describe("ClientAdm facade unit tests", () => {
     expect(client.id.id).toBe(clientFound.id);
     expect(client.name).toBe(clientFound.name);
     expect(client.email).toBe(clientFound.email);
-    expect(client.address).toBe(clientFound.address);
+    expect(client.document).toBe(clientFound.document);
+    expect(client.address.street).toBe(clientFound.street);
+    expect(client.address.number).toBe(clientFound.number);
+    expect(client.address.complement).toBe(clientFound.complement);
+    expect(client.address.city).toBe(clientFound.city);
+    expect(client.address.state).toBe(clientFound.state);
+    expect(client.address.zipCode).toBe(clientFound.zipCode);
   });
 
   it("should find a client", async () => {
@@ -57,14 +80,28 @@ describe("ClientAdm facade unit tests", () => {
       id: new Id(),
       name: "Client",
       email: "client@email.com",
-      address: "Address",
+      document: "1234",
+      address: new Address({
+        street: "Street",
+        number: "123",
+        complement: "",
+        city: "City",
+        state: "State",
+        zipCode: "123456",
+      }),
     });
 
     await ClientModel.create({
       id: client.id.id,
       name: client.name,
       email: client.email,
-      address: client.address,
+      document: "1234",
+      street: "Street",
+      number: "123",
+      complement: "",
+      city: "City",
+      state: "State",
+      zipCode: "123456",
       createdAt: client.createdAt,
       updatedAt: client.updatedAt,
     });
@@ -74,7 +111,13 @@ describe("ClientAdm facade unit tests", () => {
     expect(client.id.id).toBe(clientFound.id);
     expect(client.name).toBe(clientFound.name);
     expect(client.email).toBe(clientFound.email);
-    expect(client.address).toBe(clientFound.address);
+    expect(client.document).toBe(clientFound.document);
+    expect(client.address.street).toBe(clientFound.address.street);
+    expect(client.address.number).toBe(clientFound.address.number);
+    expect(client.address.complement).toBe(clientFound.address.complement);
+    expect(client.address.city).toBe(clientFound.address.city);
+    expect(client.address.state).toBe(clientFound.address.state);
+    expect(client.address.zipCode).toBe(clientFound.address.zipCode);
     expect(client.createdAt).toEqual(clientFound.createdAt);
     expect(client.updatedAt).toEqual(clientFound.updatedAt);
   });

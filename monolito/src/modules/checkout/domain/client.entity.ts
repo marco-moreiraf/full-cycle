@@ -4,7 +4,7 @@ import Address from "../../@shared/domain/value-object/address.value-object";
 import Id from "../../@shared/domain/value-object/id.value-object";
 
 export interface ClientProps {
-  id: Id;
+  id?: Id;
   name: string;
   email: string;
   document: string;
@@ -12,6 +12,7 @@ export interface ClientProps {
   createdAt?: Date;
   updatedAt?: Date;
 }
+
 export default class Client extends BaseEntity implements AggregateRoot {
   private _name: string;
   private _email: string;
