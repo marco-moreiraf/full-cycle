@@ -121,7 +121,7 @@ describe("Invoice repository unit tests", () => {
         zipCode: invoice.address.zipCode,
         items: invoice.items.map((item) => ({
           id: item.id.id,
-          invoice_id: invoice.id.id,
+          invoiceId: invoice.id.id,
           name: item.name,
           price: item.price,
         })),

@@ -7,8 +7,6 @@ export interface ProductProps {
   name: string;
   description: string;
   salesPrice: number;
-  createdAt?: Date;
-  updatedAt?: Date;
 }
 
 export default class Product extends BaseEntity implements AggregateRoot {
@@ -17,7 +15,7 @@ export default class Product extends BaseEntity implements AggregateRoot {
   private _salesPrice: number;
 
   constructor(props: ProductProps) {
-    super(props.id, props.createdAt, props.updatedAt);
+    super(props.id);
     this._name = props.name;
     this._description = props.description;
     this._salesPrice = props.salesPrice;

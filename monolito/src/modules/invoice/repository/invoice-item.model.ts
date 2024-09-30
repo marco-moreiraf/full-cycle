@@ -15,7 +15,7 @@ export default class InvoiceItemModel extends Model {
 
   @ForeignKey(() => InvoiceModel)
   @Column({ allowNull: false })
-  declare invoice_id: string;
+  declare invoiceId: string;
 
   @Column({ allowNull: false })
   declare name: string;
