@@ -4,4 +4,5 @@ use (
 	./comunicacao/graphql
 	./comunicacao/grpc
 	./arquitetura-hexagonal
+	./microservices/walletcore
 )
