@@ -116,3 +116,29 @@ func (s *AccountDBTestSuite) TestFindByID() {
 
 	s.Nil(err)
 }
+
+func (s *AccountDBTestSuite) TestUpdateBalance() {
+	account, _ := entity.NewAccount(s.client)
+
+	_, err := s.db.Exec(
+		"INSERT INTO clients (id, name, email, created_at, updated_at) VALUES (?, ?, ?, ?, ?)",
+		s.client.ID, s.client.Name, s.client.Email, s.client.CreatedAt, s.client.UpdatedAt,
+	)
+	s.Nil(err)
+
+	_, err = s.db.Exec(
+		"INSERT INTO accounts (id, client_id, balance, created_at, updated_at) VALUES (?, ?, ?, ?, ?)",
+		account.ID, account.ClientID, account.Balance, account.CreatedAt, account.UpdatedAt,
+	)
+	s.Nil(err)
+
+	account.Credit(1000)
+
+	err = s.accountDB.UpdateBalance(account)
+	s.Nil(err)
+
+	accountDB, err := s.accountDB.FindByID(account.ID)
+	s.Nil(err)
+
+	s.Equal(float64(1000), accountDB.Balance)
+}

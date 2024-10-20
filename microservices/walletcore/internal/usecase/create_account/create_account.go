@@ -1,4 +1,4 @@
-package createaccount
+package create_account
 
 import (
 	"github.com/marco-moreiraf/walletcore/internal/entity"
@@ -6,11 +6,11 @@ import (
 )
 
 type CreateAccountIputDTO struct {
-	ClientID string
+	ClientID string `json:"client_id"`
 }
 
 type CreateAccountOutputDTO struct {
-	ID string
+	ID string `json:"id"`
 }
 
 type CreateAccountUseCase struct {
