@@ -5,4 +5,5 @@ use (
 	./comunicacao/grpc
 	./arquitetura-hexagonal
 	./microservices/walletcore
+	./microservices/walletbalance
 )

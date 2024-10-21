@@ -20,6 +20,30 @@ services:
       - 3306:3306
     volumes:
       - ./walletcore/.docker/mysql:/var/lib/mysql
+      - ./walletcore/.docker/database/init.sql:/docker-entrypoint-initdb.d/init.sql
+  
+  balance-app:
+    build: .
+    platform: linux/amd64
+    volumes:
+      - ./walletbalance:/app
+    ports:
+      - 3003:3003
+
+  balance-db:
+    image: postgres:15-alpine
+    platform: linux/amd64
+    restart: always
+    shm_size: 128mb
+    ports:
+      - 5432:5432
+    volumes:
+      - ./walletbalance/.docker/postgres:/var/lib/postgresql
+      - ./walletbalance/.docker/database/init.sql:/docker-entrypoint-initdb.d/init.sql
+    environment:
+      - POSTGRES_USER=root
+      - POSTGRES_PASSWORD=root
+      - POSTGRES_DB=balance
 
   zookeeper:
     image: "confluentinc/cp-zookeeper:6.1.0"
