@@ -30,7 +30,7 @@
     "sequelize-typescript": "^2.1.6",
     "sqlite3": "^6.0.1",
     "umzug": "^3.8.2",
-    "uuid": "^9.0.1",
+    "uuid": "^14.0.0",
     "yup": "^1.4.0"
   }
 }
